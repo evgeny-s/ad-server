@@ -1,0 +1,11 @@
+import { Injectable } from '@nestjs/common';
+import { Connection, Repository } from 'typeorm';
+
+@Injectable()
+export class DatabaseService {
+  constructor(public readonly connection: Connection) {}
+
+  async getRepository<T>(entity): Promise<Repository<T>> {
+    return this.connection.getRepository(entity);
+  }
+}
