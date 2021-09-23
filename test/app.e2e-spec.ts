@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { getConnection } from 'typeorm';
@@ -26,6 +26,9 @@ describe('AppController (e2e)', () => {
     await clearDb();
 
     app = moduleFixture.createNestApplication();
+
+    app.useGlobalPipes(new ValidationPipe());
+
     await app.init();
   });
 
@@ -61,6 +64,7 @@ describe('AppController (e2e)', () => {
         },
         supply: {
           id: supply1.body[0].id,
+          name: 'Deal 1'
         },
       })
       .expect(201);
