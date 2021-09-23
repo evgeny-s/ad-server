@@ -32,6 +32,13 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
+  afterAll(async () => {
+    const connection = getConnection();
+
+    await app.close();
+    await connection.close();
+  });
+
   it('Should create tags and return correct ad', async () => {
     await request(app.getHttpServer())
       .post('/tags')
